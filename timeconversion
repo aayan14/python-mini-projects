@@ -1,0 +1,43 @@
+import requests
+from bs4 import BeautifulSoup
+import html5lib
+from datetime import timedelta
+
+
+url = 'https://publib.boulder.ibm.com/tividd/td/TWS/SC32-1274-02/en_US/HTML/SRF_mst273.htm'
+content = requests.get(url)
+contentHTML = BeautifulSoup(content.content,'html5lib')
+
+reference = {}
+ref = contentHTML.find_all('tr')[4:]
+for item in ref:
+	reference[item.find('td',attrs = {'headers':'wq497'}).string] = item.find('td',attrs = {'headers':'wq498'}).string
+countries = {}
+entries = contentHTML.find_all('tr')[4:]
+for item in entries:
+	countries[item.find('td',attrs = {'headers':'wq497'}).string] = {'sign':item.find('td',attrs = {'headers':'wq499'}).string[3],'hours':item.find('td',attrs = {'headers':'wq499'}).string[4:].split(':')[0],'minutes':item.find('td',attrs = {'headers':'wq499'}).string.split('GMT')[1].split(':')[1]}
+
+
+for item in reference:
+	print(item+':'+reference[item])
+
+
+fromZone = input('Given Zone')
+toZone = input('To Zone')
+hour = int(input('Enter Hours'))
+minute = int(input('Enter minute'))
+second = int(input('Enter second'))
+givenTimeDelta = timedelta(hours = hour,minutes = minute, seconds = second)
+if countries[fromZone]['sign'] == '+':
+	gmtTime = givenTimeDelta - timedelta(hours = countries[fromZone]['hours'], minutes = countries[fromZone]['minutes'], seconds = 00)
+else:
+	gmtTime = givenTimeDelta + timedelta(hours = countries[fromZone]['hours'], minutes = countries[fromZone]['minutes'], seconds = 00)
+
+if countries[toZone]['sign'] == '+':
+	resultTime = gmtTime + timedelta(hours = countries[toZone]['hours'], minutes = countries[toZone]['minutes'], seconds = 00)
+else:
+	resultTime = gmtTime - timedelta(hours = countries[toZone]['hours'], minutes = countries[toZone]['minutes'], seconds = 00)
+
+print(resultTime)
+
+
