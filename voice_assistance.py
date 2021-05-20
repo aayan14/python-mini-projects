@@ -1,13 +1,9 @@
-# ------------------------------------------- MINI PROJECT SEMESTER 6TH -----------------------------------------------
-# -------------------------------------- PROJECT TOPIC: DESKTOP VOICE ASSISTANT ----------------------------------------
+# -------------------------------------- PROJECT TOPIC: DESKTOP VOICE ASSISTANT ---------------------------------------
 
-# GROUP: B3
-# NAMES: 1) Aayan Singh (1BY18EE001)  2) Debanshu Poddar (1BY18EE015) 3) Deepanshi Singh Rao (1BY18EE017)
-
-'''Description : Desktop voice assistant is an application made using python programming language and it modules which
-listen to the user and try to recognize its speech and convert it to an string. Based on the command, it performs 
-diffrent action and automates some works which user does manually. Some of the action it performs are like 
-opening a website, checking the time, getting the current news, wikipedia search etc.'''
+'''Description : Desktop voice assistant is an application made using python programming languages speech recognition 
+module and other useful modules which listen to the user and try to recognize its speech and convert it to an string. 
+Based on the command, it performs diffrent action and automates some works which user does manually. Some of the action 
+it performs are like opening a website, checking the time, getting the current news, wikipedia search etc.'''
 
 #----------------------------------------------------CODE-------------------------------------------------------------#
 
@@ -18,7 +14,6 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import os
-import smtplib
 import random
 import requests
 from bs4 import BeautifulSoup
@@ -173,11 +168,11 @@ if __name__ == '__main__':
             webbrowser.open('google.com')
             break
 
-        elif 'open V T U website' in query:
+        elif 'open university website' in query:
             webbrowser.open('vtu.ac.in')
             break
 
-        elif 'open B M S I T website' in query:
+        elif 'open college website' in query:
             webbrowser.open('bmsit.ac.in')
             break
 
@@ -187,8 +182,8 @@ if __name__ == '__main__':
             currtime = datetime.datetime.now().strftime('%H:%M:%S')
 
             # Prints and says thee current time
-            speak(currtime)
             print(currtime)
+            speak(currtime)
             break
 
         # Check for the keyword in query
@@ -251,8 +246,7 @@ if __name__ == '__main__':
                 print("Link: " + item['link'])
                 print()
             exit()
-            
-            
+
         # Ckeck the keyword in query
         elif 'write a note' in query:
             # Creates a text file which will be like a todo list
@@ -272,7 +266,7 @@ if __name__ == '__main__':
 
         # Ckeck the keyword in query
         elif 'show notes' in query:
-            # Shows the notes/todos 
+            # Shows the notes/todos
             file = open('note.txt', 'r')
             print(file.read())
             exit()
